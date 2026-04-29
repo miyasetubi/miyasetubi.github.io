@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社宮設備 — 水道・設備工事</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:   #0b1018;
+  --ink2:  #182030;
+  --ink3:  #4a5568;
+  --blue:  #1a5f8a;
+  --blue2: #2d82b5;
+  --blue3: #5ba3ca;
+  --silver:#a8bcd0;
+  --cream: #f0f4f8;
+  --cream2:#e2eaf2;
+  --white: #f7f9fc;
+  --line:  rgba(26,95,138,0.2);
+  --ff-display: 'Cormorant Garamond', 'Shippori Mincho', serif;
+  --ff-body:    'Noto Sans JP', sans-serif;
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--ff-body);
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════
+   DESKTOP CURSOR
+═══════════════════════════════ */
+#cursor, #cursor-ring { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  #cursor {
+    display: block; position: fixed; top:0; left:0;
+    width:8px; height:8px; background:var(--blue2);
+    border-radius:50%; pointer-events:none; z-index:9999;
+    transform:translate(-50%,-50%);
+    transition: transform .15s, width .2s, height .2s;
+  }
+  #cursor-ring {
+    display: block; position:fixed; top:0; left:0;
+    width:36px; height:36px; border:1px solid var(--blue2);
+    border-radius:50%; pointer-events:none; z-index:9998;
+    transform:translate(-50%,-50%); opacity:.5;
+    transition: transform .45s cubic-bezier(.16,1,.3,1), width .3s, height .3s;
+  }
+}
+
+/* ═══════════════════════════════
+   MOBILE FLOATING CTA (スマホのみ)
+═══════════════════════════════ */
+.float-cta {
+  display: none;
+  position: fixed; bottom:0; left:0; right:0; z-index:150;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--line);
+  background: rgba(247,249,252,0.97);
+  backdrop-filter: blur(10px);
+}
+@media (max-width: 768px) {
+  .float-cta { display: grid; }
+}
+.float-btn {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 4px; padding: 12px 0;
+  text-decoration: none; font-size: 11px; font-weight: 500;
+  letter-spacing: .06em; transition: background .2s;
+}
+.float-btn:first-child { background: var(--blue); color:#fff; border-right:1px solid rgba(255,255,255,0.15); }
+.float-btn:last-child  { color: var(--blue); }
+.float-btn svg { width:18px; height:18px; }
+
+/* ═══════════════════════════════
+   NAV — desktop
+═══════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:28px 60px;
+  transition: background .4s, padding .4s;
+}
+nav.scrolled {
+  background: rgba(247,249,252,0.96);
+  backdrop-filter: blur(12px);
+  padding: 18px 60px;
+  border-bottom: 1px solid var(--line);
+}
+.nav-logo {
+  display:flex; align-items:center; gap:12px;
+  font-family:var(--ff-display); font-size:22px; font-weight:600;
+  letter-spacing:.06em; color:var(--ink); text-decoration:none;
+}
+.nav-logo-icon {
+  width:36px; height:36px; background:var(--blue); border-radius:4px;
+  display:flex; align-items:center; justify-content:center;
+}
+.nav-logo-icon svg { width:20px; height:20px; }
+.nav-logo span { color:var(--blue); }
+.nav-links { display:flex; gap:40px; list-style:none; }
+.nav-links a {
+  font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink3); text-decoration:none;
+  position:relative; padding-bottom:3px; transition:color .2s;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:0; left:0;
+  width:0; height:1px; background:var(--blue2); transition:width .3s;
+}
+.nav-links a:hover { color:var(--ink); }
+.nav-links a:hover::after { width:100%; }
+.nav-cta {
+  font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  padding:10px 24px; border:1px solid var(--blue);
+  color:var(--blue); text-decoration:none;
+  transition:background .25s, color .25s;
+}
+.nav-cta:hover { background:var(--blue); color:#fff; }
+
+/* Mobile tel button in nav */
+.nav-tel-mobile { display: none; }
+
+/* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
+.hero {
+  min-height:100vh; display:grid;
+  grid-template-columns:1fr 1fr;
+  position:relative; overflow:hidden;
+}
+.hero-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:140px 60px 100px; position:relative; z-index:2;
+}
+.hero-eyebrow {
+  font-size:10px; letter-spacing:.25em; text-transform:uppercase;
+  color:var(--blue2); margin-bottom:32px;
+  display:flex; align-items:center; gap:16px;
+}
+.hero-eyebrow::before {
+  content:''; display:block; width:40px; height:1px; background:var(--blue2);
+}
+.hero-title {
+  font-family:var(--ff-display);
+  font-size:clamp(40px,5.5vw,80px);
+  font-weight:300; line-height:1.1; letter-spacing:-.01em;
+  color:var(--ink); margin-bottom:32px;
+}
+.hero-title em { font-style:italic; color:var(--blue); display:block; }
+.hero-sub {
+  font-size:14px; line-height:2.1; color:var(--ink3);
+  max-width:400px; margin-bottom:52px;
+  font-weight:300; letter-spacing:.04em;
+}
+.hero-actions { display:flex; gap:20px; align-items:center; }
+.btn-primary {
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  padding:16px 40px; background:var(--ink); color:var(--cream);
+  text-decoration:none; position:relative; overflow:hidden; transition:color .3s;
+}
+.btn-primary::after {
+  content:''; position:absolute; inset:0;
+  background:var(--blue); transform:translateX(-101%);
+  transition:transform .35s cubic-bezier(.77,0,.18,1);
+}
+.btn-primary:hover::after { transform:translateX(0); }
+.btn-primary span { position:relative; z-index:1; }
+.btn-secondary {
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ink3); text-decoration:none;
+  display:flex; align-items:center; gap:10px; transition:color .2s;
+}
+.btn-secondary:hover { color:var(--blue); }
+.btn-secondary svg { width:18px; height:18px; }
+
+/* hero right visual */
+.hero-right { position:relative; overflow:hidden; }
+.hero-bg {
+  position:absolute; inset:0;
+  background:linear-gradient(160deg,#0b1f3a 0%,#112d52 50%,#0d2240 100%);
+}
+.hero-water {
+  position:absolute; bottom:0; left:0; right:0; height:45%;
+  background:linear-gradient(to top,rgba(26,95,138,0.55),transparent);
+}
+.hero-wave {
+  position:absolute; bottom:40%; left:-10%; right:-10%;
+  height:80px; border-radius:50%;
+  border:1px solid rgba(91,163,202,0.25); transform:scaleX(1.5);
+  animation:wave 8s ease-in-out infinite;
+}
+.hero-wave:nth-child(2){ bottom:36%; height:60px; border-color:rgba(91,163,202,0.15); animation-delay:-3s; animation-duration:11s; }
+.hero-wave:nth-child(3){ bottom:33%; height:50px; border-color:rgba(91,163,202,0.1);  animation-delay:-6s; animation-duration:14s; }
+@keyframes wave { 0%,100%{transform:scaleX(1.5) translateY(0)} 50%{transform:scaleX(1.5) translateY(-12px)} }
+.hero-grid-overlay {
+  position:absolute; inset:0; opacity:.04;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 39px,var(--blue3) 39px,var(--blue3) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,var(--blue3) 39px,var(--blue3) 40px);
+}
+.hero-pipes {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:240px; height:240px;
+}
+.hero-pipes svg { width:100%; height:100%; }
+.hero-badge-wrap {
+  position:absolute; bottom:48px; right:48px;
+  width:110px; height:110px;
+  border:1px solid rgba(91,163,202,0.35); border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.hero-badge-num { font-family:var(--ff-display); font-size:38px; font-weight:300; color:var(--blue3); line-height:1; }
+.hero-badge-txt { font-size:9px; letter-spacing:.2em; color:var(--silver); margin-top:2px; }
+.scroll-indicator {
+  position:absolute; bottom:40px; left:60px;
+  display:flex; align-items:center; gap:12px;
+  font-size:9px; letter-spacing:.25em; color:var(--ink3);
+  text-transform:uppercase; z-index:2;
+}
+.scroll-line { width:1px; height:40px; background:var(--line); position:relative; overflow:hidden; }
+.scroll-line::after {
+  content:''; position:absolute; top:-100%; left:0;
+  width:100%; height:100%; background:var(--blue2);
+  animation:scroll-run 2s ease-in-out infinite;
+}
+@keyframes scroll-run { to { top:100%; } }
+
+/* ═══════════════════════════════
+   DIVIDER
+═══════════════════════════════ */
+.blue-line {
+  height:1px; background:linear-gradient(90deg,transparent,var(--blue2),transparent);
+}
+
+/* ═══════════════════════════════
+   SECTION BASE
+═══════════════════════════════ */
+.section-label {
+  font-size:9px; letter-spacing:.35em; text-transform:uppercase;
+  color:var(--blue2); margin-bottom:20px;
+}
+.section-title {
+  font-family:var(--ff-display); font-size:clamp(32px,4vw,50px);
+  font-weight:300; line-height:1.15; color:var(--cream);
+}
+.section-link {
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--blue3); text-decoration:none;
+  display:flex; align-items:center; gap:8px; transition:gap .2s;
+}
+.section-link:hover { gap:16px; }
+.section-header {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-bottom:64px;
+}
+
+/* ═══════════════════════════════
+   ABOUT
+═══════════════════════════════ */
+.about {
+  display:grid; grid-template-columns:1fr 1fr;
+  padding:120px 60px; gap:80px; align-items:center;
+}
+.about-title {
+  font-family:var(--ff-display); font-size:clamp(32px,4vw,52px);
+  font-weight:300; line-height:1.2; margin-bottom:32px; color:var(--ink);
+}
+.about-body {
+  font-size:14px; line-height:2.1; color:var(--ink3);
+  font-weight:300; letter-spacing:.04em; margin-bottom:20px;
+}
+.about-stats {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:24px; margin-top:44px;
+}
+.stat-num { font-family:var(--ff-display); font-size:44px; font-weight:300; color:var(--blue); line-height:1; }
+.stat-unit { font-size:16px; }
+.stat-label { font-size:11px; letter-spacing:.06em; color:var(--ink3); margin-top:6px; }
+.about-visual { position:relative; height:460px; }
+.about-box {
+  position:absolute; right:0; top:0; width:84%; height:84%;
+  background:linear-gradient(140deg,#0d1f38,#172d4e);
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.about-box-pattern {
+  position:absolute; inset:0; opacity:.06;
+  background-image:repeating-linear-gradient(45deg,var(--blue3) 0,var(--blue3) 1px,transparent 0,transparent 50%);
+  background-size:18px 18px;
+}
+.about-box-icon { position:relative; z-index:1; }
+.about-box-icon svg { width:120px; height:120px; opacity:.25; }
+.about-accent { position:absolute; left:0; bottom:0; width:38%; height:38%; border:1px solid var(--blue2); opacity:.35; }
+.about-label-big {
+  position:absolute; font-family:var(--ff-display); font-size:180px; font-weight:300;
+  color:rgba(26,95,138,0.07); line-height:1; right:4px; bottom:10px; pointer-events:none;
+}
+
+/* ═══════════════════════════════
+   SERVICES
+═══════════════════════════════ */
+.services { background:var(--ink); padding:120px 60px; }
+.services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+.service-card {
+  padding:44px 36px; border:1px solid rgba(26,95,138,0.18);
+  position:relative; overflow:hidden; cursor:default; transition:border-color .3s;
+}
+.service-card::before {
+  content:''; position:absolute; bottom:0; left:0;
+  width:100%; height:0;
+  background:linear-gradient(to top,rgba(26,95,138,0.1),transparent);
+  transition:height .4s;
+}
+.service-card:hover { border-color:rgba(45,130,181,0.5); }
+.service-card:hover::before { height:100%; }
+.service-num {
+  font-family:var(--ff-display); font-size:56px; font-weight:300;
+  color:rgba(45,130,181,0.15); line-height:1; margin-bottom:16px; display:block;
+}
+.service-name {
+  font-family:var(--ff-display); font-size:24px; font-weight:400;
+  color:var(--cream); margin-bottom:14px; line-height:1.25;
+}
+.service-desc {
+  font-size:13px; line-height:2; color:rgba(240,244,248,0.45);
+  font-weight:300; letter-spacing:.03em;
+}
+.service-arrow {
+  display:block; margin-top:28px; font-size:20px; color:var(--blue3);
+  opacity:0; transition:opacity .3s, transform .3s; transform:translateX(-8px);
+}
+.service-card:hover .service-arrow { opacity:1; transform:translateX(0); }
+
+/* ═══════════════════════════════
+   FLOW
+═══════════════════════════════ */
+.flow { padding:120px 60px; background:var(--cream); }
+.flow-steps {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0; margin-top:64px; position:relative;
+}
+.flow-steps::before {
+  content:''; position:absolute; top:36px; left:12.5%; right:12.5%;
+  height:1px; background:var(--line);
+}
+.flow-step { padding:0 20px; text-align:center; }
+.flow-circle {
+  width:72px; height:72px; border-radius:50%; border:1px solid var(--blue2);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 24px; background:var(--white); position:relative; z-index:1;
+  transition:background .3s, border-color .3s;
+}
+.flow-circle svg { width:28px; height:28px; stroke:var(--blue2); }
+.flow-step:hover .flow-circle { background:var(--blue); border-color:var(--blue); }
+.flow-step:hover .flow-circle svg { stroke:#fff; }
+.flow-num { font-family:var(--ff-display); font-size:11px; color:var(--blue2); letter-spacing:.2em; margin-bottom:10px; }
+.flow-title { font-family:var(--ff-display); font-size:18px; font-weight:400; color:var(--ink); margin-bottom:10px; }
+.flow-desc { font-size:12px; line-height:1.9; color:var(--ink3); font-weight:300; }
+
+/* ═══════════════════════════════
+   PHILOSOPHY
+═══════════════════════════════ */
+.philosophy {
+  padding:120px 60px; background:var(--white);
+  display:grid; grid-template-columns:1fr 1.4fr; gap:100px; align-items:start;
+}
+.philosophy-sticky { position:sticky; top:100px; }
+.philosophy-quote {
+  font-family:var(--ff-display); font-size:clamp(24px,3vw,42px);
+  font-weight:300; line-height:1.45; color:var(--ink);
+}
+.philosophy-quote em { color:var(--blue); font-style:italic; }
+.philosophy-attr { font-size:11px; letter-spacing:.14em; color:var(--ink3); margin-top:24px; text-transform:uppercase; }
+.philosophy-items { display:flex; flex-direction:column; }
+.philosophy-item {
+  padding:36px 0; border-bottom:1px solid var(--cream2);
+  display:grid; grid-template-columns:56px 1fr; gap:28px; align-items:start;
+}
+.philosophy-item:first-child { border-top:1px solid var(--cream2); }
+.philo-num { font-family:var(--ff-display); font-size:28px; font-weight:300; color:var(--blue); line-height:1; padding-top:4px; }
+.philo-title { font-family:var(--ff-display); font-size:20px; font-weight:400; margin-bottom:10px; color:var(--ink); }
+.philo-body { font-size:13px; line-height:2; color:var(--ink3); font-weight:300; letter-spacing:.03em; }
+
+/* ═══════════════════════════════
+   RECRUIT
+═══════════════════════════════ */
+.recruit { background:var(--ink); padding:120px 60px; }
+.recruit-lead {
+  font-size:15px; line-height:2; color:rgba(240,244,248,0.6);
+  font-weight:300; max-width:640px; margin-top:20px; letter-spacing:.04em;
+}
+.recruit-appeal { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:64px 0; }
+.appeal-card {
+  padding:36px 28px; border:1px solid rgba(45,130,181,0.2);
+  position:relative; overflow:hidden; transition:border-color .3s;
+}
+.appeal-card:hover { border-color:rgba(91,163,202,0.5); }
+.appeal-icon { width:40px; height:40px; margin-bottom:20px; }
+.appeal-icon svg { width:40px; height:40px; stroke:var(--blue3); }
+.appeal-title { font-family:var(--ff-display); font-size:20px; font-weight:400; color:var(--cream); margin-bottom:10px; }
+.appeal-body { font-size:13px; line-height:1.9; color:rgba(240,244,248,0.45); font-weight:300; letter-spacing:.03em; }
+.recruit-jobs { display:flex; flex-direction:column; gap:0; }
+.recruit-job { border:1px solid rgba(45,130,181,0.18); margin-bottom:2px; overflow:hidden; transition:border-color .3s; }
+.recruit-job:hover { border-color:rgba(91,163,202,0.45); }
+.recruit-job-header {
+  display:grid; grid-template-columns:auto 1fr auto;
+  gap:24px; align-items:center; padding:28px 36px; cursor:pointer;
+}
+.job-type {
+  font-size:9px; letter-spacing:.22em; text-transform:uppercase;
+  padding:5px 12px; border:1px solid var(--blue3); color:var(--blue3); white-space:nowrap;
+}
+.job-type.part { border-color:var(--silver); color:var(--silver); }
+.job-type.contract { border-color:var(--blue2); color:var(--blue2); }
+.job-name { font-family:var(--ff-display); font-size:22px; font-weight:400; color:var(--cream); }
+.job-toggle {
+  width:28px; height:28px; border:1px solid rgba(91,163,202,0.4); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--blue3); font-size:16px; transition:transform .3s, background .2s; flex-shrink:0;
+}
+.recruit-job.open .job-toggle { transform:rotate(45deg); background:rgba(45,130,181,0.15); }
+.recruit-job-body { display:none; padding:0 36px 32px; border-top:1px solid rgba(45,130,181,0.12); }
+.recruit-job.open .recruit-job-body { display:block; }
+.job-table { width:100%; border-collapse:collapse; margin-top:20px; }
+.job-table tr { border-bottom:1px solid rgba(45,130,181,0.1); }
+.job-table tr:last-child { border-bottom:none; }
+.job-table th {
+  font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--blue3); font-weight:400; padding:14px 0;
+  text-align:left; width:130px; vertical-align:top;
+}
+.job-table td { font-size:13px; color:rgba(240,244,248,0.6); font-weight:300; padding:14px 0; line-height:1.85; }
+.job-apply {
+  display:inline-block; margin-top:24px;
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  padding:12px 32px; border:1px solid var(--blue3); color:var(--blue3);
+  text-decoration:none; position:relative; overflow:hidden; transition:color .3s;
+}
+.job-apply::after {
+  content:''; position:absolute; inset:0;
+  background:var(--blue2); transform:scaleX(0); transform-origin:left;
+  transition:transform .3s cubic-bezier(.77,0,.18,1);
+}
+.job-apply:hover::after { transform:scaleX(1); }
+.job-apply span { position:relative; z-index:1; }
+.job-apply:hover span { color:#fff; }
+
+/* ═══════════════════════════════
+   NEWS
+═══════════════════════════════ */
+.news { padding:100px 60px; background:var(--cream); }
+.news-grid { display:flex; flex-direction:column; gap:0; margin-top:56px; }
+.news-item {
+  display:grid; grid-template-columns:120px 100px 1fr auto;
+  gap:36px; align-items:center; padding:24px 0;
+  border-bottom:1px solid var(--cream2);
+  text-decoration:none; color:var(--ink); transition:color .2s;
+}
+.news-item:first-child { border-top:1px solid var(--cream2); }
+.news-item:hover .news-title { color:var(--blue); }
+.news-date { font-size:12px; color:var(--ink3); letter-spacing:.04em; font-weight:300; }
+.news-tag {
+  font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+  padding:4px 10px; border:1px solid var(--line); color:var(--blue2); white-space:nowrap;
+}
+.news-title { font-size:14px; font-weight:300; letter-spacing:.04em; transition:color .25s; }
+.news-arrow { font-size:18px; color:var(--blue2); opacity:0; transition:opacity .25s; }
+.news-item:hover .news-arrow { opacity:1; }
+.news-empty {
+  text-align: center; padding: 60px 20px; margin-top: 40px;
+  border: 1px dashed var(--cream2); border-radius: 4px;
+  background: rgba(255,255,255,0.5);
+}
+.news-empty-icon { display: flex; justify-content: center; margin-bottom: 20px; }
+.news-empty-icon svg { width: 48px; height: 48px; stroke: var(--blue3); opacity: 0.5; }
+.news-empty-text {
+  font-family: var(--ff-display); font-size: 20px; font-weight: 400;
+  color: var(--ink2); margin-bottom: 8px; letter-spacing: .04em;
+}
+.news-empty-sub { font-size: 13px; color: var(--ink3); font-weight: 300; }
+
+/* ═══════════════════════════════
+   CONTACT
+═══════════════════════════════ */
+.contact {
+  background:var(--ink2); padding:120px 60px;
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+}
+.contact-title {
+  font-family:var(--ff-display); font-size:clamp(34px,4vw,56px);
+  font-weight:300; line-height:1.15; color:var(--cream); margin-bottom:24px;
+}
+.contact-body { font-size:14px; line-height:2; color:rgba(240,244,248,0.5); font-weight:300; letter-spacing:.04em; margin-bottom:28px; }
+.contact-info { display:flex; flex-direction:column; gap:16px; }
+.contact-info-row {
+  display:flex; align-items:center; gap:14px;
+  font-size:13px; color:rgba(240,244,248,0.55); font-weight:300;
+}
+.contact-info-row svg { width:16px; height:16px; stroke:var(--blue3); flex-shrink:0; }
+.contact-form { display:flex; flex-direction:column; gap:20px; }
+.form-field { display:flex; flex-direction:column; gap:8px; }
+.form-label { font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:rgba(91,163,202,0.7); }
+.form-input {
+  background:transparent; border:none; border-bottom:1px solid rgba(45,130,181,0.25);
+  padding:12px 0; color:var(--cream); font-family:var(--ff-body);
+  font-size:14px; font-weight:300; outline:none; letter-spacing:.04em;
+  transition:border-color .25s; -webkit-appearance:none; border-radius:0;
+}
+.form-input::placeholder { color:rgba(240,244,248,0.2); }
+.form-input:focus { border-color:var(--blue3); }
+.form-textarea { resize:none; height:90px; }
+.form-submit {
+  margin-top:8px; padding:16px 40px;
+  background:transparent; border:1px solid var(--blue3);
+  color:var(--blue3); font-family:var(--ff-body);
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  cursor:pointer; position:relative; overflow:hidden;
+  transition:color .3s; align-self:flex-start;
+}
+.form-submit::after {
+  content:''; position:absolute; inset:0;
+  background:var(--blue2); transform:scaleX(0); transform-origin:left;
+  transition:transform .35s cubic-bezier(.77,0,.18,1);
+}
+.form-submit:hover::after { transform:scaleX(1); }
+.form-submit span { position:relative; z-index:1; }
+.form-submit:hover span { color:#fff; }
+
+/* ═══════════════════════════════
+   ACCESS MAP
+═══════════════════════════════ */
+.access { background:var(--white); padding:120px 60px; }
+.access-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:60px; align-items:stretch; margin-top:40px; }
+.access-info {
+  background:var(--cream); padding:40px 36px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.access-info-row {
+  padding:18px 0; border-bottom:1px solid var(--cream2);
+  display:grid; grid-template-columns:88px 1fr; gap:20px; align-items:start;
+}
+.access-info-row:last-child { border-bottom:none; }
+.access-info-label {
+  font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--blue); font-weight:500; padding-top:3px;
+}
+.access-info-val {
+  font-size:14px; line-height:1.85; color:var(--ink); font-weight:400; letter-spacing:.03em;
+}
+.access-info-val a { color:var(--blue); text-decoration:none; }
+.access-info-val a:hover { text-decoration:underline; }
+.access-map {
+  position:relative; min-height:420px;
+  border:1px solid var(--cream2); overflow:hidden;
+}
+.access-map iframe { width:100%; height:100%; border:0; display:block; min-height:420px; }
+.access-directions {
+  display:inline-flex; align-items:center; gap:8px; margin-top:16px;
+  padding:11px 20px; background:var(--blue); color:#fff;
+  text-decoration:none; font-size:12px; letter-spacing:.1em; border-radius:2px;
+  transition:background .2s;
+}
+.access-directions:hover { background:var(--ink); }
+.access-directions svg { width:14px; height:14px; }
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+footer {
+  background:var(--ink); padding:52px 60px;
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:40px; align-items:center;
+  border-top:1px solid rgba(26,95,138,0.2);
+}
+.footer-logo { font-family:var(--ff-display); font-size:19px; font-weight:600; color:var(--cream); letter-spacing:.06em; }
+.footer-logo span { color:var(--blue3); }
+.footer-copy { font-size:11px; color:rgba(240,244,248,0.3); letter-spacing:.06em; text-align:center; }
+.footer-links { display:flex; gap:24px; justify-content:flex-end; list-style:none; }
+.footer-links a { font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(240,244,248,0.3); text-decoration:none; transition:color .2s; }
+.footer-links a:hover { color:var(--blue3); }
+
+/* ═══════════════════════════════
+   REVEAL ANIMATION
+═══════════════════════════════ */
+.reveal {
+  opacity:0; transform:translateY(24px);
+  transition:opacity .8s cubic-bezier(.25,1,.5,1), transform .8s cubic-bezier(.25,1,.5,1);
+}
+.reveal.visible { opacity:1; transform:none; }
+.reveal-delay-1 { transition-delay:.1s; }
+.reveal-delay-2 { transition-delay:.2s; }
+.reveal-delay-3 { transition-delay:.3s; }
+
+/* ═══════════════════════════════
+   RESPONSIVE — TABLET (max 900px)
+═══════════════════════════════ */
+@media (max-width: 900px) {
+  nav { padding:20px 24px; }
+  nav.scrolled { padding:14px 24px; }
+  .nav-links, .nav-cta { display:none; }
+  .nav-tel-mobile {
+    display:flex; align-items:center; gap:6px;
+    background:var(--blue); color:#fff;
+    padding:9px 14px; border-radius:4px; text-decoration:none;
+    font-size:13px; font-weight:500; white-space:nowrap;
+  }
+  .nav-tel-mobile svg { width:14px; height:14px; }
+  .hero { grid-template-columns:1fr; min-height:auto; }
+  .hero-left { padding:100px 24px 48px; }
+  .hero-right { height:260px; }
+  .hero-pipes { width:160px; height:160px; }
+  .hero-badge-wrap { width:80px; height:80px; bottom:20px; right:20px; }
+  .hero-badge-num { font-size:28px; }
+  .scroll-indicator { display:none; }
+  .about { grid-template-columns:1fr; padding:72px 24px; gap:40px; }
+  .about-visual { height:240px; }
+  .about-label-big { font-size:120px; }
+  .services { padding:72px 24px; }
+  .services-grid { grid-template-columns:1fr; }
+  .section-header { flex-direction:column; align-items:flex-start; gap:16px; margin-bottom:40px; }
+  .flow { padding:72px 24px; }
+  .flow-steps { grid-template-columns:1fr 1fr; gap:32px; }
+  .flow-steps::before { display:none; }
+  .philosophy { grid-template-columns:1fr; padding:72px 24px; gap:48px; }
+  .philosophy-sticky { position:static; }
+  .recruit { padding:72px 24px; }
+  .recruit-appeal { grid-template-columns:1fr; gap:12px; margin:32px 0; }
+  .recruit-job-header { grid-template-columns:auto 1fr auto; gap:12px; padding:20px 16px; }
+  .job-name { font-size:17px; }
+  .recruit-job-body { padding:0 16px 20px; }
+  .job-table th { width:90px; font-size:9px; }
+  .news { padding:72px 24px; }
+  .news-item { grid-template-columns:1fr; gap:6px; }
+  .news-arrow { display:none; }
+  .contact { grid-template-columns:1fr; padding:72px 24px; gap:48px; }
+  .form-submit { width:100%; text-align:center; }
+  .access { padding:72px 24px; }
+  .access-grid { grid-template-columns:1fr; gap:0; }
+  .access-info { padding:28px 24px; }
+  .access-map { min-height:320px; order:-1; }
+  .access-map iframe { min-height:320px; }
+  footer { grid-template-columns:1fr; text-align:center; padding:36px 24px 88px; gap:16px; }
+  .footer-links { justify-content:center; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE — MOBILE (max 480px)
+═══════════════════════════════ */
+@media (max-width: 480px) {
+  .hero-title { font-size:32px; }
+  .hero-sub { font-size:13px; }
+  .hero-actions { flex-direction:column; align-items:stretch; }
+  .btn-primary { text-align:center; padding:15px; }
+  .btn-secondary { justify-content:center; }
+  .about-stats { gap:12px; }
+  .stat-num { font-size:32px; }
+  .service-card { padding:28px 20px; }
+  .service-num { font-size:40px; }
+  .flow-steps { grid-template-columns:1fr; }
+  .philosophy-quote { font-size:22px; }
+  .recruit-lead { font-size:13px; }
+  .appeal-card { padding:24px 20px; }
+  .news-item { padding:16px 0; }
+  .contact-title { font-size:28px; }
+  footer { padding-bottom:90px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round">
+        <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/>
+        <circle cx="12" cy="9" r="2.5"/>
+      </svg>
+    </div>
+    株式会社宮設備
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">会社概要</a></li>
+    <li><a href="#services">サービス</a></li>
+    <li><a href="#flow">施工の流れ</a></li>
+    <li><a href="#philosophy">理念</a></li>
+    <li><a href="#recruit">採用情報</a></li>
+    <li><a href="#news">お知らせ</a></li>
+    <li><a href="#access">アクセス</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">お問い合わせ</a>
+  <a href="tel:04888715318" class="nav-tel-mobile">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 12 19.79 19.79 0 01.12 3.38 2 2 0 012.1 1.26h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.14 9.16a16 16 0 006.66 6.66l1.21-1.21a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+    電話
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow reveal">水道・給排水設備工事のプロフェッショナル</div>
+    <h1 class="hero-title reveal reveal-delay-1">
+      暮らしを支える<br>
+      <em>確かな水を、</em><br>
+      届け続ける。
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      株式会社宮設備は、埼玉県さいたま市を拠点に上下水道の取出・宅内工事を専門に手がけます。平成16年の設立以来、地域の水インフラを支え続けています。
+    </p>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#services" class="btn-primary"><span>サービスを見る</span></a>
+      <a href="#contact" class="btn-secondary">
+        無料相談はこちら
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-water"></div>
+    <div class="hero-wave"></div>
+    <div class="hero-wave"></div>
+    <div class="hero-wave"></div>
+    <div class="hero-pipes">
+      <svg viewBox="0 0 200 200" fill="none">
+        <rect x="84" y="20" width="32" height="160" rx="6" fill="rgba(45,130,181,0.18)" stroke="rgba(91,163,202,0.4)" stroke-width="1"/>
+        <rect x="20" y="84" width="160" height="32" rx="6" fill="rgba(45,130,181,0.18)" stroke="rgba(91,163,202,0.4)" stroke-width="1"/>
+        <circle cx="100" cy="100" r="24" fill="rgba(26,95,138,0.4)" stroke="rgba(91,163,202,0.6)" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="12" fill="rgba(45,130,181,0.5)" stroke="rgba(91,163,202,0.8)" stroke-width="1"/>
+        <circle cx="100" cy="46"  r="5" fill="rgba(91,163,202,0.5)"/>
+        <circle cx="100" cy="154" r="5" fill="rgba(91,163,202,0.5)"/>
+        <circle cx="46"  cy="100" r="5" fill="rgba(91,163,202,0.5)"/>
+        <circle cx="154" cy="100" r="5" fill="rgba(91,163,202,0.5)"/>
+      </svg>
+    </div>
+    <div class="hero-badge-wrap">
+      <div class="hero-badge-num">22</div>
+      <div class="hero-badge-txt">years</div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<div class="blue-line"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="section-label reveal" style="color:var(--blue2)">会社概要</div>
+    <h2 class="about-title reveal reveal-delay-1">22年の実績が証明する、<br>技術と信頼</h2>
+    <p class="about-body reveal reveal-delay-2">株式会社宮設備は、平成16年5月13日の設立以来、埼玉県さいたま市を拠点に上下水道の取出・宅内工事を専門に手がけてまいりました。代表取締役 宮澤秀典のもと、個人住宅から集合住宅まで幅広く対応しています。</p>
+    <p class="about-body reveal reveal-delay-2">国家資格を持つ技術者が在籍し、水道局指定工事店として安心・安全・迅速な工事をお約束します。お客様の生活を止めないスピード対応が私たちの強みです。</p>
+    <div class="about-stats reveal reveal-delay-3">
+      <div>
+        <div class="stat-num">3<span class="stat-unit">千+</span></div>
+        <div class="stat-label">施工実績件数</div>
+      </div>
+      <div>
+        <div class="stat-num">22<span class="stat-unit">年</span></div>
+        <div class="stat-label">設立（平成16年）</div>
+      </div>
+      <div>
+        <div class="stat-num">指定<span class="stat-unit">店</span></div>
+        <div class="stat-label">水道局指定工事店</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-visual reveal reveal-delay-1">
+    <div class="about-box">
+      <div class="about-box-pattern"></div>
+      <div class="about-box-icon">
+        <svg viewBox="0 0 100 100" fill="none" stroke="rgba(91,163,202,1)" stroke-width="1.5">
+          <path d="M50 10C30 30 20 45 20 60C20 78 34 90 50 90C66 90 80 78 80 60C80 45 70 30 50 10Z"/>
+          <path d="M50 50C40 55 36 65 40 72C44 79 56 79 60 72C64 65 60 55 50 50Z" fill="rgba(26,95,138,0.3)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="about-accent"></div>
+    <div class="about-label-big">水</div>
+  </div>
+</section>
+
+<div class="blue-line"></div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div>
+      <div class="section-label reveal" style="color:var(--blue3)">サービス内容</div>
+      <h2 class="section-title reveal reveal-delay-1">水まわりのすべてを<br>ワンストップで</h2>
+    </div>
+    <a href="#contact" class="section-link reveal">相談する →</a>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <div class="service-name">上水道<br>取出工事</div>
+      <p class="service-desc">道路に埋設された配水管から各建物への給水管引込工事。新築・建替え・増設など、あらゆる場面での上水道取出に対応しています。</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-num">02</span>
+      <div class="service-name">下水道<br>取出工事</div>
+      <p class="service-desc">公共下水道への新規接続工事を承ります。汲み取りや浄化槽からの切替工事にも対応し、衛生的な排水環境の整備をサポートします。</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-num">03</span>
+      <div class="service-name">宅内給水<br>配管工事</div>
+      <p class="service-desc">建物内部の給水・給湯配管の新設・改修・更新工事を行います。キッチン・浴室・トイレなど各水まわり設備への配管を丁寧に施工します。</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">04</span>
+      <div class="service-name">宅内排水<br>配管工事</div>
+      <p class="service-desc">建物内の排水管・汚水管の新設・修繕・更新を承ります。詰まりや老朽化による水漏れなど、排水トラブルの根本解決を行います。</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-num">05</span>
+      <div class="service-name">漏水調査・<br>緊急修理</div>
+      <p class="service-desc">突然の水漏れにも、営業時間内に素早く駆けつけます。最新の漏水探知機器で原因を素早く特定し、最短での復旧を実現します。</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-num">06</span>
+      <div class="service-name">水道メーター・<br>バルブ工事</div>
+      <p class="service-desc">水道メーターの交換・移設、止水バルブの設置・修繕を行います。道路工事に伴う水道管切り回し・仮設工事にも対応しています。</p>
+      <span class="service-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow" id="flow">
+  <div class="section-header">
+    <div>
+      <div class="section-label reveal">施工の流れ</div>
+      <h2 class="section-title reveal reveal-delay-1" style="color:var(--ink)">ご依頼から完工まで</h2>
+    </div>
+  </div>
+  <div class="flow-steps">
+    <div class="flow-step reveal">
+      <div class="flow-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 12 19.79 19.79 0 01.12 3.38 2 2 0 012.1 1.26h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.14 9.16a16 16 0 006.66 6.66l1.21-1.21a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+      </div>
+      <div class="flow-num">Step 01</div>
+      <div class="flow-title">お問い合わせ</div>
+      <p class="flow-desc">電話・メール・フォームよりお気軽にご連絡ください。営業時間内に順次対応いたします。</p>
+    </div>
+    <div class="flow-step reveal reveal-delay-1">
+      <div class="flow-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+      </div>
+      <div class="flow-num">Step 02</div>
+      <div class="flow-title">現地調査・見積</div>
+      <p class="flow-desc">専門スタッフが現地に伺い、無料でお見積りをご提示します。</p>
+    </div>
+    <div class="flow-step reveal reveal-delay-2">
+      <div class="flow-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <div class="flow-num">Step 03</div>
+      <div class="flow-title">施工・工事</div>
+      <p class="flow-desc">ご承認後、迅速に施工を開始。状況をわかりやすくご説明しながら進めます。</p>
+    </div>
+    <div class="flow-step reveal reveal-delay-3">
+      <div class="flow-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <path d="M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10z"/><path d="M8 12l3 3 5-5"/>
+        </svg>
+      </div>
+      <div class="flow-num">Step 04</div>
+      <div class="flow-title">完工・アフター</div>
+      <p class="flow-desc">完工後も定期点検やアフターサポートで長くお付き合いします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-sticky">
+    <div class="section-label reveal" style="color:var(--blue2)">企業理念</div>
+    <blockquote class="philosophy-quote reveal reveal-delay-1">
+      「水は生活の<em>根幹。</em><br>だからこそ、誠実に向き合う」
+    </blockquote>
+    <div class="philosophy-attr reveal reveal-delay-2">— 代表取締役 宮澤 秀典</div>
+  </div>
+  <div class="philosophy-items">
+    <div class="philosophy-item reveal">
+      <div class="philo-num">I</div>
+      <div>
+        <div class="philo-title">安全第一</div>
+        <p class="philo-body">水道工事は人々の命と生活に直結します。どんな小さな工事でも安全基準を厳守し、手を抜かない施工をお約束します。資格保有者による確実な工事が私たちの誇りです。</p>
+      </div>
+    </div>
+    <div class="philosophy-item reveal reveal-delay-1">
+      <div class="philo-num">II</div>
+      <div>
+        <div class="philo-title">迅速・丁寧</div>
+        <p class="philo-body">水のトラブルはその日の生活に支障をきたします。素早い初動対応と、お客様が不安にならないような丁寧な説明・作業を徹底しています。</p>
+      </div>
+    </div>
+    <div class="philosophy-item reveal reveal-delay-2">
+      <div class="philo-num">III</div>
+      <div>
+        <div class="philo-title">地域に根ざす</div>
+        <p class="philo-body">さいたま市の皆さまに育てていただきました。一軒一軒のお客様を大切にし、地域の水インフラを守る存在であり続けることが私たちの使命です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="blue-line"></div>
+
+<!-- RECRUIT -->
+<section class="recruit" id="recruit">
+  <div class="section-header">
+    <div>
+      <div class="section-label reveal" style="color:var(--blue3)">採用情報</div>
+      <h2 class="section-title reveal reveal-delay-1">水道の仕事で、<br>地域の暮らしを支えよう</h2>
+    </div>
+  </div>
+  <p class="recruit-lead reveal reveal-delay-2">上下水道の取出・宅内工事は、人々の日常生活に欠かせないインフラを守る仕事です。未経験からでも一人前の技術者として活躍できる環境が、宮設備にはあります。</p>
+  <div class="recruit-appeal">
+    <div class="appeal-card reveal">
+      <div class="appeal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
+        </svg>
+      </div>
+      <div class="appeal-title">地域に根ざした<br>やりがいのある仕事</div>
+      <p class="appeal-body">工事が完了した瞬間、お客様の「ありがとう」を直接受け取れるのがこの仕事の醍醐味。自分の手で地域の水インフラを支えているという実感が毎日得られます。</p>
+    </div>
+    <div class="appeal-card reveal reveal-delay-1">
+      <div class="appeal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+      </div>
+      <div class="appeal-title">未経験から<br>国家資格取得を支援</div>
+      <p class="appeal-body">水道工事の知識ゼロからスタートしたスタッフが多数活躍中。資格取得費用の会社負担・先輩技術者による丁寧なOJT研修で、着実にスキルアップできます。</p>
+    </div>
+    <div class="appeal-card reveal reveal-delay-2">
+      <div class="appeal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+        </svg>
+      </div>
+      <div class="appeal-title">少数精鋭の<br>アットホームな職場</div>
+      <p class="appeal-body">代表自らが現場に出る距離感の近い職場です。困ったことはすぐ相談でき、意見が通りやすい風通しの良い環境。仲間と助け合いながら成長できます。</p>
+    </div>
+  </div>
+  <div class="recruit-jobs">
+    <div class="recruit-job reveal" id="job1">
+      <div class="recruit-job-header" onclick="toggleJob('job1')">
+        <span class="job-type">正社員</span>
+        <span class="job-name">水道工事技術者（経験者・未経験者歓迎）</span>
+        <span class="job-toggle">+</span>
+      </div>
+      <div class="recruit-job-body">
+        <table class="job-table">
+          <tr><th>仕事内容</th><td>上下水道の取出工事・宅内給排水配管工事全般、および関連する事務作業（書類作成・工事記録管理など）。先輩スタッフと一緒に現場に出ながら技術を習得していただきます。</td></tr>
+          <tr><th>給与</th><td>月給220,000円〜350,000円（経験・スキルにより優遇）<br>※試用期間3ヶ月あり（条件同じ）</td></tr>
+          <tr><th>勤務時間</th><td>8:00〜17:00（休憩1時間）残業は月平均20時間程度</td></tr>
+          <tr><th>休日・休暇</th><td>日曜・祝日定休、第2・4土曜休み<br>年末年始・夏季休暇・有給休暇</td></tr>
+          <tr><th>応募資格</th><td>普通自動車免許（必須）。経験不問・未経験者歓迎。</td></tr>
+          <tr><th>待遇・福利厚生</th><td>社会保険完備・交通費支給・制服貸与・資格取得支援制度</td></tr>
+        </table>
+        <a href="#contact" class="job-apply"><span>この求人に応募する →</span></a>
+      </div>
+    </div>
+    <div class="recruit-job reveal reveal-delay-1" id="job2">
+      <div class="recruit-job-header" onclick="toggleJob('job2')">
+        <span class="job-type part">アルバイト</span>
+        <span class="job-name">工事補助スタッフ（現場補助）</span>
+        <span class="job-toggle">+</span>
+      </div>
+      <div class="recruit-job-body">
+        <table class="job-table">
+          <tr><th>仕事内容</th><td>水道工事現場での資材運搬・補助作業・清掃・道路保安のほか、事務所での事務作業（書類整理・電話対応など）もお任せします。正社員登用制度あり。</td></tr>
+          <tr><th>給与</th><td>時給1,100円〜1,300円（経験・スキルにより優遇）<br>日払い・週払い相談可</td></tr>
+          <tr><th>勤務時間</th><td>8:00〜17:00のシフト制。週2日〜OK・扶養内勤務も相談可。</td></tr>
+          <tr><th>応募資格</th><td>普通自動車免許があれば尚可（なくてもOK）。体を動かすことが好きな方歓迎。</td></tr>
+          <tr><th>待遇</th><td>交通費支給・制服貸与・正社員登用実績あり</td></tr>
+        </table>
+        <a href="#contact" class="job-apply"><span>この求人に応募する →</span></a>
+      </div>
+    </div>
+    <div class="recruit-job reveal reveal-delay-2" id="job3">
+      <div class="recruit-job-header" onclick="toggleJob('job3')">
+        <span class="job-type contract">業務委託</span>
+        <span class="job-name">一人親方・協力業者募集</span>
+        <span class="job-toggle">+</span>
+      </div>
+      <div class="recruit-job-body">
+        <table class="job-table">
+          <tr><th>依頼内容</th><td>上下水道取出工事・宅内配管工事の施工請負。案件量は安定しており、継続的にお付き合いいただける方を優先します。</td></tr>
+          <tr><th>報酬</th><td>案件内容・規模により個別見積もり。月末締め翌月末払い。</td></tr>
+          <tr><th>稼働</th><td>週3日〜応相談。繁忙期は週5日程度の依頼あり。</td></tr>
+          <tr><th>必要資格</th><td>給水装置工事主任技術者 または 下水道排水設備工事責任技術者</td></tr>
+          <tr><th>対応エリア</th><td>埼玉県さいたま市およびその近郊</td></tr>
+        </table>
+        <a href="#contact" class="job-apply"><span>詳細を問い合わせる →</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news" id="news">
+  <div class="section-header">
+    <div>
+      <div class="section-label">お知らせ</div>
+      <h2 class="section-title reveal" style="color:var(--ink)">最新情報</h2>
+    </div>
+  </div>
+  <div class="news-empty reveal">
+    <div class="news-empty-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round">
+        <rect x="3" y="4" width="18" height="16" rx="2"/>
+        <path d="M7 9h10M7 13h6"/>
+      </svg>
+    </div>
+    <p class="news-empty-text">現在、お知らせはありません。</p>
+    <p class="news-empty-sub">最新情報はこちらに掲載いたします。</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div>
+    <div class="section-label" style="color:var(--blue3)">お問い合わせ</div>
+    <h2 class="contact-title reveal">水まわりのお悩み、<br>まずご相談ください</h2>
+    <p class="contact-body reveal reveal-delay-1">上下水道の取出・宅内工事に関するご相談はお気軽にどうぞ。見積もり無料。お急ぎの場合はお電話が最も早くご対応できます。</p>
+    <div class="contact-info reveal reveal-delay-2">
+      <div class="contact-info-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 12"/>
+          <path d="M.12 3.38A2 2 0 012.1 1.26h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.14 9.16"/>
+        </svg>
+        048-871-5318（営業時間内対応）
+      </div>
+      <div class="contact-info-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+        </svg>
+        miyasetsubi@arion.ocn.ne.jp
+      </div>
+      <div class="contact-info-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        埼玉県さいたま市北区盆栽町95-2-103
+      </div>
+    </div>
+  </div>
+  <form class="contact-form reveal reveal-delay-1" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <div class="form-field">
+      <label class="form-label">お名前 <span style="color:var(--blue3)">*</span></label>
+      <input class="form-input" type="text" name="name" placeholder="山田 太郎" autocomplete="name" required>
+    </div>
+    <div class="form-field">
+      <label class="form-label">電話番号 <span style="color:var(--blue3)">*</span></label>
+      <input class="form-input" type="tel" name="phone" placeholder="090-XXXX-XXXX" autocomplete="tel" required>
+    </div>
+    <div class="form-field">
+      <label class="form-label">メールアドレス <span style="color:var(--blue3)">*</span></label>
+      <input class="form-input" type="email" name="email" placeholder="example@email.com" autocomplete="email" required>
+    </div>
+    <div class="form-field">
+      <label class="form-label">お問い合わせ内容 <span style="color:var(--blue3)">*</span></label>
+      <textarea class="form-input form-textarea" name="message" placeholder="例：水漏れが起きている、見積りをお願いしたいなど" required></textarea>
+    </div>
+    <p style="font-size:11px;color:rgba(240,244,248,0.4);line-height:1.7;margin-top:-4px;">送信前に <a href="privacy.html" style="color:var(--blue3);text-decoration:underline;" target="_blank">プライバシーポリシー</a> をご確認ください。</p>
+    <input type="hidden" name="_subject" value="ホームページからのお問い合わせ">
+    <input type="hidden" name="_language" value="ja">
+    <button type="submit" class="form-submit" id="submit-btn"><span>送信する</span></button>
+    <div id="form-status" style="display:none;font-size:13px;padding:12px;border-radius:4px;margin-top:8px;"></div>
+  </form>
+</section>
+
+<!-- ACCESS -->
+<section class="access" id="access">
+  <div class="section-header">
+    <div>
+      <div class="section-label reveal" style="color:var(--blue2)">アクセス</div>
+      <h2 class="section-title reveal reveal-delay-1" style="color:var(--ink)">会社へのご来訪</h2>
+    </div>
+  </div>
+  <div class="access-grid">
+    <div class="access-info reveal">
+      <div class="access-info-row">
+        <div class="access-info-label">所在地</div>
+        <div class="access-info-val">〒331-0805<br>埼玉県さいたま市北区盆栽町95-2-103</div>
+      </div>
+      <div class="access-info-row">
+        <div class="access-info-label">電話</div>
+        <div class="access-info-val"><a href="tel:04888715318">048-871-5318</a></div>
+      </div>
+      <div class="access-info-row">
+        <div class="access-info-label">メール</div>
+        <div class="access-info-val"><a href="mailto:miyasetsubi@arion.ocn.ne.jp">miyasetsubi@arion.ocn.ne.jp</a></div>
+      </div>
+      <div class="access-info-row">
+        <div class="access-info-label">最寄り駅</div>
+        <div class="access-info-val">東武アーバンパークライン<br>「大宮公園駅」より徒歩圏内</div>
+      </div>
+      <div class="access-info-row">
+        <div class="access-info-label">営業時間</div>
+        <div class="access-info-val">月〜金 8:00〜17:00<br>※日曜・祝日・第2第4土曜定休</div>
+      </div>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=%E5%9F%BC%E7%8E%89%E7%9C%8C%E3%81%95%E3%81%84%E3%81%9F%E3%81%BE%E5%B8%82%E5%8C%97%E5%8C%BA%E7%9B%86%E6%A0%BD%E7%94%BA95-2-103" target="_blank" class="access-directions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        Googleマップで経路を見る
+      </a>
+    </div>
+    <div class="access-map reveal reveal-delay-1">
+      <iframe
+        src="https://www.google.com/maps?q=%E5%9F%BC%E7%8E%89%E7%9C%8C%E3%81%95%E3%81%84%E3%81%9F%E3%81%BE%E5%B8%82%E5%8C%97%E5%8C%BA%E7%9B%86%E6%A0%BD%E7%94%BA95-2-103&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">株式会社<span>宮設備</span></div>
+  <p class="footer-copy">© 2025 株式会社宮設備. All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="privacy.html">プライバシーポリシー</a></li>
+    <li><a href="#recruit">採用情報</a></li>
+  </ul>
+</footer>
+
+<!-- スマホ用固定CTAバー -->
+<div class="float-cta">
+  <a href="tel:04888715318" class="float-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 12 19.79 19.79 0 01.12 3.38 2 2 0 012.1 1.26h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.14 9.16a16 16 0 006.66 6.66l1.21-1.21a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+    今すぐ電話
+  </a>
+  <a href="#contact" class="float-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+    </svg>
+    メール問合せ
+  </a>
+</div>
+
+<script>
+// カスタムカーソル（PCのみ）
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx=0, my=0, rx=0, ry=0;
+if (cursor.style.display !== 'none') {
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+  });
+  (function animRing() {
+    rx += (mx-rx)*.12; ry += (my-ry)*.12;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(animRing);
+  })();
+  document.querySelectorAll('a,button,.service-card,.flow-step,.news-item,.recruit-job').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.width = '56px'; ring.style.height = '56px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+}
+
+// ナビスクロール
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// スクロールアニメーション
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// 求人アコーディオン
+function toggleJob(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// フォーム送信（Formspree AJAX）
+const form = document.getElementById('contact-form');
+if (form) {
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const status = document.getElementById('form-status');
+    const data = new FormData(form);
+
+    btn.querySelector('span').textContent = '送信中...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.reset();
+        btn.querySelector('span').textContent = '送信完了 ✓';
+        btn.style.borderColor = '#5bc987';
+        btn.querySelector('span').style.color = '#5bc987';
+        status.style.display = 'block';
+        status.style.background = 'rgba(91,201,135,0.1)';
+        status.style.color = '#5bc987';
+        status.textContent = 'お問い合わせありがとうございます。担当者より折り返しご連絡いたします。';
+      } else {
+        throw new Error('送信に失敗しました');
+      }
+    } catch (error) {
+      btn.querySelector('span').textContent = '送信する';
+      btn.disabled = false;
+      status.style.display = 'block';
+      status.style.background = 'rgba(220,80,80,0.1)';
+      status.style.color = '#dc5050';
+      status.textContent = '送信に失敗しました。お手数ですが、お電話（048-871-5318）またはメールにてご連絡ください。';
+    }
+  });
+}
+</script>
+</body>
+</html>
